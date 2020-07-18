@@ -16,6 +16,9 @@ abstract class BaseUserActivity : AppCompatActivity(), UserView {
 
     abstract val userAdapter: UserAdapter
 
+    /**
+     * We need to create the presenter lazily as it should use the intent which'll be available after the activity .onCreate
+     **/
     @Suppress("UNCHECKED_CAST")
     protected val presenter: UserPresenter by lazy {
         UserPresenter.newInstance(
@@ -50,18 +53,12 @@ abstract class BaseUserActivity : AppCompatActivity(), UserView {
     companion object {
         private const val KEY_USER_PREDICATE = "KEY_USER_PREDICATE"
 
-        fun newInstanceLambda(
-            context: Context,
-            predicate: ((UserItem) -> Boolean)? = null
-        ): Intent =
+        fun newInstanceLambda(context: Context, predicate: ((UserItem) -> Boolean)? = null): Intent =
             Intent(context, UserLambdaActivity::class.java).apply {
                 putExtra(KEY_USER_PREDICATE, predicate as Serializable?)
             }
 
-        fun newInstanceReference(
-            context: Context,
-            predicate: ((UserItem) -> Boolean)? = null
-        ): Intent =
+        fun newInstanceReference(context: Context, predicate: ((UserItem) -> Boolean)? = null): Intent =
             Intent(context, UserReferenceActivity::class.java).apply {
                 putExtra(KEY_USER_PREDICATE, predicate as Serializable?)
             }
