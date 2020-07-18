@@ -17,7 +17,7 @@ abstract class BaseUserActivity : AppCompatActivity(), UserView {
     abstract val userAdapter: UserAdapter
 
     /**
-     * We need to create the presenter lazily as it should use the intent which'll be available after the activity .onCreate
+     * We need to create the presenter lazily as it should use data from the intent which'll be available after the activity .onCreate
      **/
     @Suppress("UNCHECKED_CAST")
     protected val presenter: UserPresenter by lazy {
